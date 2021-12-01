@@ -6,9 +6,19 @@ export default function Formulario () {
     const [cidade, onChangeCidade] = useState('')
 
     const handleConsultar = () => {
-        onChangeCidade(cep)
-    }
-
+        const url = 'https://viacep.com.br/ws/' + cep + '/json/'
+        fetch(url, {
+            method:'GET',
+            headers: {
+                Accept: 'application/json',
+                'Content-type': 'application/json'
+            }
+        }).then(function(response){
+            response.json().then(function(data){
+            onChangeCidade(data['localidade'])
+        })
+    })
+}
     return(
         <View>
             <Text>Digite um CEP (somente números):</Text>
